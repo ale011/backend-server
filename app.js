@@ -1,9 +1,23 @@
 // Requires
 var express = require('express');
 var mongoose = require('mongoose');
+var bodyParser = require('body-parser')
 
 // Initializa variables
 var app = express();
+
+// Body parser configuration
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+
+// parse application/json
+app.use(bodyParser.json())
+
+
+//Import routes
+var appRoutes = require('./routes/app');
+var loginRoutes = require('./routes/login');
+var userRoutes = require('./routes/user');
 
 // Database connection
 mongoose.connect('mongodb://localhost:27017/hospitalDB', (err, res) => {
@@ -14,13 +28,10 @@ mongoose.connect('mongodb://localhost:27017/hospitalDB', (err, res) => {
     console.log('Database is  \x1b[32m%s\x1b[0m', 'online');
 });
 
-//Routes
-app.get('/', (req, res, next) => {
-    res.status(301).json({
-        ok: true,
-        message: 'Peticion realizada correctamente'
-    });
-});
+// Routes
+app.use('/user', userRoutes);
+app.use('/login', loginRoutes);
+app.use('/', appRoutes);
 
 // Listen express requests
 app.listen(3000, () => {
