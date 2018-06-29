@@ -10,7 +10,11 @@ var Usuario = require('../models/user');
 //Routes
 app.get('/', (req, res, next) => {
 
+    var skip = req.query.skip || 0;
+    skip = Number(skip);
     Usuario.find({}, 'id name email img role')
+    .skip(skip)
+    .limit(5)
     .exec((err, usuarios) => {
         if (err) {
             return res.status(500).json({
@@ -20,15 +24,18 @@ app.get('/', (req, res, next) => {
             });
         }
 
-        res.status(200).json({
-            ok: true,
-            usuarios: usuarios
+        Usuario.count({}, (err, total) => {
+            res.status(200).json({
+                ok: true,
+                usuarios: usuarios,
+                total: total
+            });
         });
     });
 });
 
 //============================================
-// Update new user
+// Update user
 //============================================
 app.put('/:id', mdAuth.verifyToken, (req, res) => {
 

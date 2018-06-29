@@ -18,6 +18,12 @@ app.use(bodyParser.json())
 var appRoutes = require('./routes/app');
 var loginRoutes = require('./routes/login');
 var userRoutes = require('./routes/user');
+var hospitalRoutes = require('./routes/hospital');
+var medicoRoutes = require('./routes/medico');
+var busquedaRoutes = require('./routes/busqueda');
+var uploadRoutes = require('./routes/upload');
+var imageRoutes = require('./routes/imagenes');
+
 
 // Database connection
 mongoose.connect('mongodb://localhost:27017/hospitalDB', (err, res) => {
@@ -31,6 +37,11 @@ mongoose.connect('mongodb://localhost:27017/hospitalDB', (err, res) => {
 // Routes
 app.use('/user', userRoutes);
 app.use('/login', loginRoutes);
+app.use('/hospital', hospitalRoutes);
+app.use('/medico', medicoRoutes);
+app.use('/busqueda', busquedaRoutes);
+app.use('/upload', uploadRoutes);
+app.use('/img', imageRoutes);
 app.use('/', appRoutes);
 
 // Listen express requests

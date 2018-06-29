@@ -4,7 +4,7 @@ var app = express();
 
 //Routes
 app.get('/', (req, res, next) => {
-    res.status(301).json({
+    res.status(200).json({
         ok: true,
         message: 'Peticion realizada correctamente'
     });
