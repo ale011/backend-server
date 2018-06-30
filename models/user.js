@@ -13,7 +13,8 @@ var usuarioSchema = new Schema({
     email: { type: String, unique: true, required: [true, 'Email is mandatory'] },
     password: { type: String, required: [true, 'Password is required'] },
     img: { type: String },
-    role: { type: String, required: true, default: 'USER_ROLE', enum: validRoles }
+    role: { type: String, required: true, default: 'USER_ROLE', enum: validRoles },
+    google: { type: Boolean, default: false }
 });
 
 usuarioSchema.plugin(uniqueValidator, {message: '{PATH} must be uniuqe'});
